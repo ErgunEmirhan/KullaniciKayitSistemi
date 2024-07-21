@@ -68,7 +68,7 @@ public class User {
 		this.surname = surname;
 	}
 	
-	public String geteMail() {
+	public String getEMail() {
 		return eMail;
 	}
 	
@@ -118,6 +118,6 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return "User{" + "userId=" + getUserId() + ", idNo='" + getIdNo() + '\'' + ", name='" + getName() + '\'' + ", surname='" + getSurname() + '\'' + ", eMail='" + geteMail() + '\'' + ", phoneNumber='" + getPhoneNumber() + '\'' + ", userName='" + getUserName() + '\'' + ", password='" + getPassword() + '\'' + ", birthday=" + getBirthday() + ", registrationDate=" + getRegistrationDate() + '}';
+		return "User{" + "userId=" + getUserId() + ", idNo='" + getIdNo() + '\'' + ", name='" + getName() + '\'' + ", surname='" + getSurname() + '\'' + ", eMail='" + getEMail() + '\'' + ", phoneNumber='" + getPhoneNumber() + '\'' + ", userName='" + getUserName() + '\'' + ", password='" + getPassword() + '\'' + ", birthday=" + getBirthday() + ", registrationDate=" + getRegistrationDate() + '}';
 	}
 }
