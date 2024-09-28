@@ -1,13 +1,14 @@
+package kksRefactored;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Scanner;
 
 public class AccountOperations {
-	
+	private static String damnHyphens = "--------------------------------------------";
 	public static void userRegister(Scanner scanner){ // gerekli bilgiler alınır, sıkıntı yoksa kullanıcı oluşturulur
 		
 		// Bilgi al
-		String damnHyphens = "--------------------------------------------";
 		System.out.println(damnHyphens + "\n-----Registration System------\n" + damnHyphens);
 		String idNo = getIdNo(scanner);
 		LocalDate birthday = getBirthday(scanner);
@@ -26,7 +27,6 @@ public class AccountOperations {
 	}
 	
 	public static void logIn(Scanner scanner){  // hesaba giriş
-		String damnHyphens = "--------------------------------------------";
 		System.out.println(damnHyphens + "\n-----Log-In Screen------------\n" + damnHyphens);
 		scanner.nextLine();
 		logIn:
@@ -44,7 +44,7 @@ public class AccountOperations {
 				String tempPassword = scanner.nextLine();
 				if (UserDataBase.passwordMatches(tempPassword, userIndex)) {
 					System.out.println("You have successfully logged in!");
-					session(scanner);
+					session(scanner, UserDataBase.getUsers()[userIndex]);
 					System.out.println("You have successfully logged out!");
 					break logIn;
 				}
@@ -55,11 +55,41 @@ public class AccountOperations {
 		}
 	}
 	
-	private static void session(Scanner scanner) { // oturum
+	private static void session(Scanner scanner, User user) { // oturum
 		session:
 		while (true){
-			System.out.println("Actions:\n0. Log-out");
+			System.out.println(damnHyphens + "\nActions:\n1.Show My Informations\n2. Change My Phone Number\n3. " +
+					                   "Change " +
+					                   "My " +
+					"E-kksOriginal.Mail\n4. Change My Password\n5. Send mail\n6. Show Inbox\n0. Log-out\n" + damnHyphens);
 			switch (scanner.nextInt()){
+				case 1:
+					System.out.println(user);
+					break;
+				case 2:
+					scanner.nextLine();
+					changePhoneNumber(scanner, user);
+					break;
+				case 3:
+					scanner.nextLine();
+					changeEMail(scanner, user);
+					break;
+				case 4:
+					scanner.nextLine();
+					changePassword(scanner, user.getUserId());
+					break;
+				case 5:
+					scanner.nextLine();
+					sendMail(scanner, user);
+					break;
+				case 6:
+					scanner.nextLine();
+					showMail(user.getUserName());
+					break;
+				case 7:
+					scanner.nextLine();
+					//sendSms(scanner, user);
+					break;
 				case 0:
 					break session;
 				default:
@@ -67,6 +97,52 @@ public class AccountOperations {
 			}
 		}
 	}
+	
+	//private static void sendSms()
+	
+	private static void sendMail(Scanner scanner, User user){
+		while (true) {
+			System.out.print("Whom do you want to send mail to?> ");
+			String receiver = scanner.nextLine();
+			int receiverIndex = UserDataBase.findUserName(receiver);
+			if (receiverIndex == -1){
+				System.out.println("This user does not exist.");
+				continue;
+			}
+			System.out.print("Decide the title of your mail> ");
+			String title = scanner.nextLine();
+			System.out.print("Write your mail> ");
+			String content = scanner.nextLine();
+			MailDataBase.sendMail(user.getUserName(), receiver, title, content);
+			System.out.println("Your mail has been sent.");
+			MailDataBase.showAllMails();
+			return;
+		}
+	}
+	
+	private static void showMail(String username){
+		Mail[] mails = MailDataBase.getMails();
+		if (mails == null){
+			System.out.println("Your inbox is empty");
+			return;
+		}
+		for (Mail mail: mails){
+			if(mail.getReceiver().equals(username)) System.out.println(mail);
+		}
+	}
+	
+	private static void changeEMail(Scanner scanner, User user) {
+		System.out.print("To do this, we need verification.  Please enter your password> ");
+		String oldPassword = scanner.nextLine();
+		if(user.getPassword().equals(oldPassword)) {
+			user.seteMail(getEMail(scanner));
+			System.out.println("E-mail changed successfully");
+		}
+		else System.out.println("Failed attempt");
+		
+	}
+	
+	
 	
 	private static String getIdNo(Scanner scanner){
 		
@@ -258,4 +334,8 @@ public class AccountOperations {
 		}
 	}
 	
+	private static void changePhoneNumber(Scanner scanner, User user){
+		String tempPhoneNumber = getPhoneNumber(scanner);
+		user.setPhoneNumber(tempPhoneNumber);
+	}
 }

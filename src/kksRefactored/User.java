@@ -1,3 +1,5 @@
+package kksRefactored;
+
 import java.time.LocalDate;
 
 public class User {
@@ -14,7 +16,7 @@ public class User {
 	private LocalDate birthday;
 	private LocalDate registrationDate;
 	
-	
+	public User(){}
 	public User(LocalDate birthday, String password, String userName, String phoneNumber, String eMail, String surname, String name, String idNo) {
 		this.birthday = birthday;
 		this.password = password;
@@ -118,6 +120,6 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return "User{" + "userId=" + getUserId() + ", idNo='" + getIdNo() + '\'' + ", name='" + getName() + '\'' + ", surname='" + getSurname() + '\'' + ", eMail='" + getEMail() + '\'' + ", phoneNumber='" + getPhoneNumber() + '\'' + ", userName='" + getUserName() + '\'' + ", password='" + getPassword() + '\'' + ", birthday=" + getBirthday() + ", registrationDate=" + getRegistrationDate() + '}';
+		return "kksOriginal.User{" + "userId=" + getUserId() + ", idNo='" + getIdNo() + '\'' + ", name='" + getName() + '\'' + ", surname='" + getSurname() + '\'' + ", eMail='" + getEMail() + '\'' + ", phoneNumber='" + getPhoneNumber() + '\'' + ", userName='" + getUserName() + '\'' + ", password='" + getPassword() + '\'' + ", birthday=" + getBirthday() + ", registrationDate=" + getRegistrationDate() + '}';
 	}
 }

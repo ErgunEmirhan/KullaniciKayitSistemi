@@ -1,3 +1,5 @@
+package kksOriginal;
+
 public class UserDataBase {
 	
 	private static UserListDynamic users = new UserListDynamic();
@@ -10,8 +12,21 @@ public class UserDataBase {
 		users.add(user);
 	}
 	
-	public static void showAll(){ // database'deki tüm kullanıcılar yazdırılır
-		users.list();
+	public static void saveAll(User... users){
+		for (User user: users){
+			save(user);
+		}
+	}
+	
+	public static void showAllUsernames(){ // database'deki tüm kullanıcılar yazdırılır
+		if (users.getUserList() != null) {
+			for (User user:users.getUserList()){
+				System.out.println(user.getUserName());
+			}
+		}
+		else{
+			System.out.println("No user registered.");
+		}
 	}
 	
 	public static int findEMail(String tempEMail) { // database'de belirtilen e-mail kayıtlı ise index'ini döner,
